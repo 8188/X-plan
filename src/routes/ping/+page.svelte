@@ -27,7 +27,7 @@
     { name: '阿里云百炼', slug: 'aliyun-bailian', region: '国内', service: '百炼 Token Plan', url: 'https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1' },
     { name: '百度千帆', slug: 'baidu-cloud', region: '国内', service: '千帆 Coding Plan', url: 'https://qianfan.baidubce.com/v1' },
     { name: '火山引擎', slug: 'volcengine', region: '国内', service: '火山方舟 Coding Plan', url: 'https://ark.cn-beijing.volces.com/api/coding/v3' },
-    { name: '讯飞星辰', slug: 'xfyun-spark', region: '国内', service: 'Astron Coding Plan', url: 'https://maas.xfyun.cn/packageSubscription?tab=month' },
+    { name: '讯飞星辰', slug: 'xfyun-spark', region: '国内', service: 'Astron Coding Plan', url: 'https://spark-api-open.xf-yun.com/v1/chat/completions' },
     { name: '京东云', slug: 'jd-cloud', region: '国内', service: 'JoyBuilder Coding Plan', url: 'https://www.jdcloud.com/cn/pages/codingplan' },
     { name: '小米', slug: 'xiaomi', region: '国内', service: 'MiMo Token Plan', url: 'https://platform.xiaomimimo.com/token-plan' },
     { name: '联通云', slug: 'unicom-cloud', region: '国内', service: '元景 Token Plan', url: 'https://www.cucloud.cn/product/tokenplan.html' },
@@ -39,8 +39,8 @@
     { name: '快手', slug: 'kuaishou', region: '国内', service: 'KwaiKAT Coding Plan', url: 'https://www.streamlake.com/marketing/coding-plan' },
     { name: '摩尔线程', slug: 'mthreads', region: '国内', service: 'AI Coding Plan', url: 'https://code.mthreads.com/' },
     { name: 'UCloud 优刻得', slug: 'ucloud', region: '国内', service: '优云智算 Agent Plan', url: 'https://www.compshare.cn/coding-plan' },
-    { name: 'Z.ai', slug: 'z-ai', region: '国外', service: 'GLM Plan (国际版)', url: 'https://z.ai/subscribe' },
-    { name: 'OpenCode', slug: 'opencode', region: '国外', service: 'OpenCode Go', url: 'https://opencode.ai/zh/go' },
+    { name: 'Z.ai', slug: 'z-ai', region: '国外', service: 'GLM Plan (国际版)', url: 'https://api.z.ai/api/coding/paas/v4' },
+    { name: 'OpenCode', slug: 'opencode', region: '国外', service: 'OpenCode Go', url: 'https://opencode.ai/zen/go/v1/chat/completions' },
   ];
 
   let results = $state<PingResult[]>(
