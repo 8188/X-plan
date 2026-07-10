@@ -1,0 +1,7 @@
+# X-Plan - AI Coding Plan 对比平台
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /demo/
+
+Sitemap: https://x-plan.pages.dev/sitemap.xml

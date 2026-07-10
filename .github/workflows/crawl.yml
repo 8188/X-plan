@@ -1,0 +1,27 @@
+name: Daily Crawl
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # UTC 02:00 = 北京时间 10:00
+  workflow_dispatch: # 支持手动触发
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run crawler
+        env:
+          SITE_URL: https://x-plan-site.pages.dev
+          ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+        run: npx tsx scripts/crawl.ts
