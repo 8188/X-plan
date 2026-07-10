@@ -10,4 +10,4 @@ database_id = "a252be3e-ddb4-4e7d-bc92-8288ca000b28"
 
 # 环境变量（敏感值用 wrangler secret 设置）
 [vars]
-SITE_URL = "https://x-plan-site.pages.dev"
+SITE_URL = "https://x-plan.pages.dev"

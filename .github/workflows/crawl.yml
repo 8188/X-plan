@@ -22,6 +22,6 @@ jobs:
 
       - name: Run crawler
         env:
-          SITE_URL: https://x-plan-site.pages.dev
+          SITE_URL: https://x-plan.pages.dev
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         run: npx tsx scripts/crawl.ts

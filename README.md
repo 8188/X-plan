@@ -1,6 +1,6 @@
 # X-Plan
 
-国内 AI 编程助手 API 套餐价格对比 — [x-plan-site.pages.dev](https://x-plan-site.pages.dev)
+国内 AI 编程助手 API 套餐价格对比 — [x-plan.pages.dev](https://x-plan.pages.dev)
 
 ## 本地开发
 

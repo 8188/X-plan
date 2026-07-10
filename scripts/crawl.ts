@@ -1,7 +1,7 @@
 /**
  * 定时爬虫脚本
  * 由 GitHub Actions 每日触发，爬取各平台最新数据并写入线上 D1
- * 用法: SITE_URL=https://x-plan-site.pages.dev ADMIN_SECRET=xxx npx tsx scripts/crawl.ts
+ * 用法: SITE_URL=https://x-plan.pages.dev ADMIN_SECRET=xxx npx tsx scripts/crawl.ts
  */
 
 import { getLightCrawlers } from '../src/crawler/platforms/index';
@@ -9,7 +9,7 @@ import { runLightCrawlers } from '../src/crawler/light/index';
 import { CrawlerDbClient } from '../src/crawler/db-client';
 import type { CrawledPlatform } from '../src/crawler/shared/types';
 
-const SITE_URL = process.env.SITE_URL || 'https://x-plan-site.pages.dev';
+const SITE_URL = process.env.SITE_URL || 'https://x-plan.pages.dev';
 const ADMIN_SECRET = process.env.ADMIN_SECRET || '';
 
 async function main() {
