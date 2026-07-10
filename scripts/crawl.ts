@@ -18,6 +18,12 @@ async function main() {
     process.exit(1);
   }
 
+  const dbClient = new CrawlerDbClient(SITE_URL, ADMIN_SECRET);
+  const initResult = await dbClient.initSchema();
+  if (!initResult.success) {
+    throw new Error(`Schema init failed: ${initResult.error}`);
+  }
+
   const crawlers = getLightCrawlers();
   if (crawlers.length === 0) {
     console.log('⚠️ No crawlers registered yet. Exiting.');
@@ -43,7 +49,6 @@ async function main() {
   console.log(`✅ Crawled ${successData.length}/${results.length} platforms successfully`);
 
   // 写入线上 D1
-  const dbClient = new CrawlerDbClient(SITE_URL, ADMIN_SECRET);
   const seedResult = await dbClient.seedData(successData);
   console.log(`🌱 Seed result: ${seedResult.success ? 'OK' : seedResult.error}`);
 }

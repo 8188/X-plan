@@ -16,6 +16,29 @@ export class CrawlerDbClient {
   }
 
   /**
+   * 初始化数据库 schema
+   */
+  async initSchema(): Promise<{ success: boolean; error?: string }> {
+    try {
+      const response = await fetch(`${this.apiBaseUrl}/api/admin/init`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${this.adminSecret}`,
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        return { success: false, error };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: String(error) };
+    }
+  }
+
+  /**
    * 写入单个平台数据
    */
   async upsertPlatform(data: CrawledPlatform): Promise<{ success: boolean; error?: string }> {
