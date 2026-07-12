@@ -4,6 +4,7 @@
  * 用法: SITE_URL=https://x-plan.pages.dev ADMIN_SECRET=xxx npx tsx scripts/crawl.ts
  */
 
+import { appendFile } from 'node:fs/promises';
 import { getLightCrawlers } from '../src/crawler/platforms/index';
 import { runLightCrawlers } from '../src/crawler/light/index';
 import { CrawlerDbClient } from '../src/crawler/db-client';
@@ -33,12 +34,59 @@ async function main() {
   console.log(`🕷️ Running ${crawlers.length} crawlers...`);
   const results = await runLightCrawlers(crawlers);
 
-  const successData: CrawledPlatform[] = results
-    .filter(r => r.success && r.data)
-    .map(r => r.data!);
+  // 分类结果
+  const successData: CrawledPlatform[] = [];
+  const fallbacks: { slug: string; name: string }[] = [];
+  const failures: { slug: string; error: string }[] = [];
 
-  for (const r of results.filter(r => !r.success)) {
-    console.warn(`❌ ${r.slug}: ${r.error}`);
+  for (const r of results) {
+    if (!r.success) {
+      failures.push({ slug: r.slug, error: r.error || 'unknown' });
+      console.warn(`❌ ${r.slug}: ${r.error}`);
+    } else if (r.fallback) {
+      fallbacks.push({ slug: r.slug, name: r.data?.platform?.name || r.slug });
+      console.warn(`⚠️ ${r.slug}: fallback (using baseline data)`);
+      if (r.data) successData.push(r.data);
+    } else {
+      if (r.data) successData.push(r.data);
+    }
+  }
+
+  // 写入 GitHub Actions Job Summary
+  const stepSummary = process.env.GITHUB_STEP_SUMMARY;
+  if (stepSummary) {
+    const lines: string[] = ['## 🕷️ Crawl Results\n'];
+    lines.push(`- ✅ Success: ${successData.length - fallbacks.length}/${results.length}`);
+    if (fallbacks.length > 0) {
+      lines.push(`- ⚠️ Fallback: ${fallbacks.length}/${results.length}`);
+      lines.push('  | Platform | Slug |');
+      lines.push('  |----------|------|');
+      for (const f of fallbacks) {
+        lines.push(`  | ${f.name} | \`${f.slug}\` |`);
+      }
+    }
+    if (failures.length > 0) {
+      lines.push(`- ❌ Failed: ${failures.length}/${results.length}`);
+      lines.push('  | Slug | Error |');
+      lines.push('  |------|-------|');
+      for (const f of failures) {
+        lines.push(`  | \`${f.slug}\` | ${f.error} |`);
+      }
+    }
+    await appendFile(stepSummary, lines.join('\n') + '\n');
+  }
+
+  // 设置 GitHub Actions 输出变量
+  const githubOutput = process.env.GITHUB_OUTPUT;
+  if (githubOutput) {
+    const hasIssues = fallbacks.length > 0 || failures.length > 0;
+    const fallbackList = fallbacks.map(f => f.name).join(', ');
+    const failureList = failures.map(f => f.slug).join(', ');
+    await appendFile(githubOutput, `has_issues=${hasIssues}\n`);
+    await appendFile(githubOutput, `fallback_count=${fallbacks.length}\n`);
+    await appendFile(githubOutput, `fallback_list=${fallbackList}\n`);
+    await appendFile(githubOutput, `failure_count=${failures.length}\n`);
+    await appendFile(githubOutput, `failure_list=${failureList}\n`);
   }
 
   if (successData.length === 0) {

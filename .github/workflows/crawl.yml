@@ -8,6 +8,12 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    outputs:
+      has_issues: ${{ steps.crawl.outputs.has_issues }}
+      fallback_count: ${{ steps.crawl.outputs.fallback_count }}
+      fallback_list: ${{ steps.crawl.outputs.fallback_list }}
+      failure_count: ${{ steps.crawl.outputs.failure_count }}
+      failure_list: ${{ steps.crawl.outputs.failure_list }}
     steps:
       - uses: actions/checkout@v7
 
@@ -23,7 +29,39 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Run crawler
+        id: crawl
         env:
           SITE_URL: https://x-plan.pages.dev
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
         run: npx tsx scripts/crawl.ts
+
+  notify:
+    needs: crawl
+    if: needs.crawl.outputs.has_issues == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification
+        env:
+          FALLBACK_COUNT: ${{ needs.crawl.outputs.fallback_count }}
+          FALLBACK_LIST: ${{ needs.crawl.outputs.fallback_list }}
+          FAILURE_COUNT: ${{ needs.crawl.outputs.failure_count }}
+          FAILURE_LIST: ${{ needs.crawl.outputs.failure_list }}
+          WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+        run: |
+          MSG="🕷️ X-Plan Crawl Alert%0A"
+          if [ "$FALLBACK_COUNT" != "0" ]; then
+            MSG+="⚠️ Fallback ($FALLBACK_COUNT): $FALLBACK_LIST%0A"
+          fi
+          if [ "$FAILURE_COUNT" != "0" ]; then
+            MSG+="❌ Failed ($FAILURE_COUNT): $FAILURE_LIST%0A"
+          fi
+          MSG+="🔗 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          if [ -n "$WEBHOOK_URL" ]; then
+            curl -s -X POST "$WEBHOOK_URL" \
+              -H 'Content-Type: application/json' \
+              -d "{\"content\":\"$MSG\"}" || true
+          else
+            echo "No NOTIFY_WEBHOOK_URL configured, skipping notification"
+            echo "$MSG"
+          fi
