@@ -16,7 +16,6 @@ import { ZhipuAiCrawler } from './zhipu-ai';
 import { MinimaxCrawler } from './minimax';
 import { KimiCrawler } from './kimi';
 import { SensenovaCrawler } from './sensenova';
-import { InfiniAiCrawler } from './infini-ai';
 import { KuaishouCrawler } from './kuaishou';
 import { MthreadsCrawler } from './mthreads';
 import { UcloudCrawler } from './ucloud';
@@ -80,7 +79,6 @@ export function getLightCrawlers(): LightCrawler[] {
     new MinimaxCrawler(),
     new KimiCrawler(),
     new SensenovaCrawler(),
-    new InfiniAiCrawler(),
     new KuaishouCrawler(),
     new MthreadsCrawler(),
     new UcloudCrawler(),

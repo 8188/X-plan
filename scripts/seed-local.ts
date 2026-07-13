@@ -31,7 +31,7 @@ async function main() {
   }
 
   // Step 1.5: Cleanup removed platforms (slugs no longer in seed data)
-  const removedSlugs = ['cline', 'fitten-code', 'continue', 'amazon-q', 'codegeex'];
+  const removedSlugs = ['cline', 'fitten-code', 'continue', 'amazon-q', 'codegeex', 'infini-ai'];
   for (const slug of removedSlugs) {
     try {
       const delRes = await fetch(`${SITE_URL}/api/admin/platforms/${slug}`, {

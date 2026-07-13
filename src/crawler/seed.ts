@@ -550,39 +550,6 @@ export const seedPlatforms: CrawledPlatform[] = [
   },
   {
     platform: {
-      name: '无问芯穹',
-      slug: 'infini-ai',
-      service: 'Infini Coding Plan',
-      category: 'other',
-      billing_unit: 'request_count',
-      platform_type: 'api',
-      accessibility: 'domestic',
-      entry_price: 40,
-      limit_desc: '1,000 次 · 12,000 次/月',
-      source_url: 'https://cloud.infini-ai.com/',
-      last_verified: '2026-07-08T00:00:00Z',
-      status: 'offline',
-    },
-    tiers: [
-      { name: 'Infini Plan', limit_short: '1,000次/5h · 12,000次/月', price: 40, description: null, sort_order: 0 },
-    ],
-    models: [
-      { name: 'DeepSeek-R1', sort_order: 0 },
-      { name: 'DeepSeek-V3', sort_order: 1 },
-      { name: 'Qwen-Max', sort_order: 2 },
-      { name: 'ChatGLM4', sort_order: 3 },
-      { name: 'Doubao-Pro', sort_order: 4 },
-    ],
-    tools: [
-      { name: '代码补全', sort_order: 0 },
-      { name: '代码对话', sort_order: 1 },
-    ],
-    tags: [{ tag: '次数计费' }],
-    rules: [],
-    remarks: [{ content: '无问芯穹 Infini Coding Plan' }],
-  },
-  {
-    platform: {
       name: '快手',
       slug: 'kuaishou',
       service: 'KwaiKAT Coding Plan',
