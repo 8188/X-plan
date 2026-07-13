@@ -35,7 +35,6 @@
     { name: 'MiniMax', slug: 'minimax', region: '国内', service: 'MiniMax Token Plan', url: 'https://api.minimaxi.com/v1' },
     { name: 'Kimi', slug: 'kimi', region: '国内', service: 'Kimi Code Plan', url: 'https://api.moonshot.cn/v1' },
     { name: '商汤日日新', slug: 'sensenova', region: '国内', service: 'SenseNova Token Plan', url: 'https://api.sensenova.cn/v1' },
-    { name: '无问芯穹', slug: 'infini-ai', region: '国内', service: 'Infini Coding Plan', url: 'https://cloud.infini-ai.com/maas/api/v1/chat/completions' },
     { name: '快手', slug: 'kuaishou', region: '国内', service: 'KwaiKAT Coding Plan', url: 'https://api.kuaishou.com/v1/chat/completions' },
     { name: '摩尔线程', slug: 'mthreads', region: '国内', service: 'AI Coding Plan', url: 'https://api.mthreads.com/v1/chat/completions' },
     { name: 'UCloud 优刻得', slug: 'ucloud', region: '国内', service: '优云智算 Agent Plan', url: 'https://api.compshare.cn/v1/chat/completions' },

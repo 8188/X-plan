@@ -99,6 +99,28 @@ async function main() {
   // 写入线上 D1
   const seedResult = await dbClient.seedData(successData);
   console.log(`🌱 Seed result: ${seedResult.success ? 'OK' : seedResult.error}`);
+
+  // 清理已移除的平台（不在 seed 中的 slug）
+  const validSlugs = new Set(successData.map(d => d.platform.slug));
+  try {
+    const allRes = await fetch(`${SITE_URL}/api/platforms?status=`, {
+      headers: { 'Authorization': `Bearer ${ADMIN_SECRET}` },
+    });
+    if (allRes.ok) {
+      const allPlatforms = (await allRes.json()) as { slug: string }[];
+      for (const p of allPlatforms) {
+        if (!validSlugs.has(p.slug)) {
+          const delRes = await fetch(`${SITE_URL}/api/admin/platforms/${p.slug}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${ADMIN_SECRET}` },
+          });
+          if (delRes.ok) console.log(`🗑️  Removed: ${p.slug}`);
+        }
+      }
+    }
+  } catch (e) {
+    console.warn(`⚠️ Cleanup failed: ${(e as Error).message}`);
+  }
 }
 
 main().catch(e => {
