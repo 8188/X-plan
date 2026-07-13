@@ -19,7 +19,7 @@ const iconMap: Record<string, string> = {
   'jd-cloud': 'jdcloud.png',
   'xiaomi': 'mimo.webp',
   'unicom-cloud': 'cucloud.png',
-  'infini-ai': 'infini.png',
+  'infini-ai': 'infini.jpg',
   'kuaishou': 'kuaishou.ico',
   'mthreads': 'mthreads.png',
   'ucloud': 'ucloud.ico',

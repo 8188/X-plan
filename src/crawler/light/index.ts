@@ -57,7 +57,7 @@ export abstract class BaseLightCrawler implements LightCrawler {
    */
   private static readonly BASELINE_ONLY_FIELDS = new Set([
     'name', 'service', 'category', 'billing_unit', 'platform_type', 'accessibility',
-    'entry_price', 'limit_desc',
+    'entry_price', 'limit_desc', 'status',
   ]);
 
   /**

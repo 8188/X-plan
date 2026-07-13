@@ -2,12 +2,12 @@
  * 本地开发环境数据导入脚本
  * 用法: npx tsx scripts/seed-local.ts
  * 
- * 需要先运行 pnpm cf-dev 启动本地 Cloudflare 开发服务器
+ * 需要先运行 pnpm preview 启动本地 Cloudflare 开发服务器
  */
 
 import { seedPlatforms } from '../src/crawler/seed';
 
-const SITE_URL = process.env.SITE_URL || 'http://localhost:5173';
+const SITE_URL = (process.env.SITE_URL || 'http://localhost:5173').trim();
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dev-secret';
 
 async function main() {
@@ -70,7 +70,7 @@ async function main() {
     }
   } catch (error) {
     console.error('❌ Seed failed:', error);
-    console.log('\n💡 Make sure the dev server is running: pnpm cf-dev');
+    console.log('\n💡 Make sure the dev server is running: pnpm preview');
     process.exit(1);
   }
 }
